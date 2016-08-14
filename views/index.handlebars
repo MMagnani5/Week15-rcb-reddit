@@ -1,1 +1,23 @@
 <h1>home page</h1>
+
+{{#each posts}}
+  <div>
+    Title: {{post.title}}
+  </div>
+   <div>
+    Url: {{post.url}}
+  </div>
+   <div>
+    Images: {{post.image}}
+  </div>
+   <div>
+    Description: {{post.description}}
+  </div>
+
+  <div>
+    Score: {{post.score}}
+  </div>
+   
+
+
+ {{/each}} 

@@ -40,9 +40,27 @@ app.get('/new-post', function(req, res){
     res.render('new');
 })
 
+app.post('/new-post', function(req, res){
+    var body = req.body;
+    
+
+   // create the post in the database
+    Posts.create({
+      title: body.title,
+      url: body.url,
+      image: body.image,
+      score: 0,
+      description: body.description
+  }).then(function(data){
+    console.log('data',data);
+    //redirect it to the post id page
+    res.redirect('./posts/' + data.dataValues.id);
+   });
+  });
+    
 app.get('/posts/:id', function(req, res){
     res.render('post');
-})
+});
 
 
 
