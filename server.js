@@ -1,6 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var handlebars = require('express-handlebars');
+var sequelize = require('sequelize');
+
 
 
 var Posts = require('./models')['Posts'];
@@ -16,7 +18,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.engine('handlebars', handlebars({
-  defualtLayout: 'main'
+  defaultLayout: 'main'
 }));
 
 app.set('view engine', 'handlebars');
@@ -33,12 +35,12 @@ app.get('/', function(req, res){
   });
     
 
-})
+});
 
 // form page
 app.get('/new-post', function(req, res){
     res.render('new');
-})
+});
 
 app.post('/new-post', function(req, res){
     var body = req.body;
@@ -58,8 +60,18 @@ app.post('/new-post', function(req, res){
    });
   });
     
-app.get('/posts/:id', function(req, res){
-    res.render('post');
+app.get('/posts/:id', function(req, res) {
+    var id = req.params.id;
+    Posts.findOne({
+      where: {
+        id: id
+      },
+    }).then(function(post) {
+      console.log('post', post);
+      res.render('post', {
+        post: post
+      });
+    });
 });
 
 
